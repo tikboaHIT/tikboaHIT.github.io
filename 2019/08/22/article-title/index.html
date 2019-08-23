@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="一级标题二级标题三级标题四级标题五级标题六级标题 内容   显示文本">
+<meta name="description" content="一级标题二级标题三级标题四级标题五级标题六级标题 内容   显示文本  class MeanEncoder:     def __init__(self, categorical_features, n_splits=5, target_type=&apos;classification&apos;, prior_weight_func=None):         &quot;&quot;&quot;         :param catego">
 <meta property="og:type" content="article">
 <meta property="og:title" content="md写博客">
 <meta property="og:url" content="http://yoursite.com/2019/08/22/article-title/index.html">
 <meta property="og:site_name" content="tikboa&#39;s blog">
-<meta property="og:description" content="一级标题二级标题三级标题四级标题五级标题六级标题 内容   显示文本">
+<meta property="og:description" content="一级标题二级标题三级标题四级标题五级标题六级标题 内容   显示文本  class MeanEncoder:     def __init__(self, categorical_features, n_splits=5, target_type=&apos;classification&apos;, prior_weight_func=None):         &quot;&quot;&quot;         :param catego">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/model.png">
-<meta property="og:updated_time" content="2019-08-23T10:59:19.810Z">
+<meta property="og:updated_time" content="2019-08-23T11:14:29.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="md写博客">
-<meta name="twitter:description" content="一级标题二级标题三级标题四级标题五级标题六级标题 内容   显示文本">
+<meta name="twitter:description" content="一级标题二级标题三级标题四级标题五级标题六级标题 内容   显示文本  class MeanEncoder:     def __init__(self, categorical_features, n_splits=5, target_type=&apos;classification&apos;, prior_weight_func=None):         &quot;&quot;&quot;         :param catego">
 <meta name="twitter:image" content="http://yoursite.com/images/model.png">
 
 
@@ -347,6 +347,106 @@
 </blockquote>
 <p><a href="https://qrfaction.github.io/" target="_blank" rel="noopener">显示文本</a></p>
 <p><img src="/images/model.png" alt></p>
+<pre><code class="python"><span class="class"><span class="keyword">class</span> <span class="title">MeanEncoder</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, categorical_features, n_splits=<span class="number">5</span>, target_type=<span class="string">'classification'</span>, prior_weight_func=None)</span>:</span>
+        <span class="string">"""</span>
+<span class="string">        :param categorical_features: list of str, the name of the categorical columns to encode</span>
+<span class="string">        :param n_splits: the number of splits used in mean encoding</span>
+<span class="string">        :param target_type: str, 'regression' or 'classification'</span>
+<span class="string">        :param prior_weight_func:</span>
+<span class="string">        a function that takes in the number of observations, and outputs prior weight when a dict is passed, the default exponential decay function will be used:</span>
+<span class="string">        k: the number of observations needed for the posterior to be weighted equally as the prior</span>
+<span class="string">        f: larger f --&gt; smaller slope</span>
+<span class="string">        """</span>
+        self.categorical_features = categorical_features
+        self.n_splits = n_splits
+        self.learned_stats = {}
+        <span class="keyword">if</span> target_type == <span class="string">'classification'</span>:
+            self.target_type = target_type
+            self.target_values = []
+        <span class="keyword">else</span>:
+            self.target_type = <span class="string">'regression'</span>
+            self.target_values = <span class="literal">None</span>
+        <span class="keyword">if</span> isinstance(prior_weight_func, dict):
+            self.prior_weight_func = eval(<span class="string">'lambda x: 1 / (1 + np.exp((x - k) / f))'</span>, dict(prior_weight_func, np=np))
+        <span class="keyword">elif</span> callable(prior_weight_func):
+            self.prior_weight_func = prior_weight_func
+        <span class="keyword">else</span>:
+            self.prior_weight_func = <span class="keyword">lambda</span> x: <span class="number">1</span> / (<span class="number">1</span> + np.exp((x - <span class="number">2</span>) / <span class="number">1</span>))
+
+<span class="meta">    @staticmethod</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">mean_encode_subroutine</span><span class="params">(X_train, y_train, X_test, variable, target, prior_weight_func)</span>:</span>
+        X_train = X_train[[variable]].copy()
+        X_test = X_test[[variable]].copy()
+        <span class="keyword">if</span> target <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:
+            nf_name = <span class="string">'{}_pred_{}'</span>.format(variable, target)
+            X_train[<span class="string">'pred_temp'</span>] = (y_train == target).astype(int) <span class="comment">#classification</span>
+        <span class="keyword">else</span>:
+            nf_name = <span class="string">'{}_pred'</span>.format(variable)
+            X_train[<span class="string">'pred_temp'</span>] = y_train  <span class="comment">#regression</span>
+        prior = X_train[<span class="string">'pred_temp'</span>].mean()
+        col_avg_y = X_train.groupby(by=variable, axis=<span class="number">0</span>)[<span class="string">'pred_temp'</span>].agg({<span class="string">'mean'</span>: <span class="string">'mean'</span>, <span class="string">'beta'</span>: <span class="string">'size'</span>})
+        col_avg_y[<span class="string">'beta'</span>] = prior_weight_func(col_avg_y[<span class="string">'beta'</span>])
+        col_avg_y[nf_name] = col_avg_y[<span class="string">'beta'</span>] * prior + (<span class="number">1</span> - col_avg_y[<span class="string">'beta'</span>]) * col_avg_y[<span class="string">'mean'</span>]
+        col_avg_y.drop([<span class="string">'beta'</span>, <span class="string">'mean'</span>], axis=<span class="number">1</span>, inplace=<span class="literal">True</span>)
+        nf_train = X_train.join(col_avg_y, on=variable)[nf_name].values
+        nf_test = X_test.join(col_avg_y, on=variable).fillna(prior, inplace=<span class="literal">False</span>)[nf_name].values
+        <span class="keyword">return</span> nf_train, nf_test, prior, col_avg_y
+
+    <span class="function"><span class="keyword">def</span> <span class="title">fit_transform</span><span class="params">(self, X, y)</span>:</span>
+        <span class="string">"""</span>
+<span class="string">        :param X: pandas DataFrame, n_samples * n_features</span>
+<span class="string">        :param y: pandas Series or numpy array, n_samples</span>
+<span class="string">        :return X_new: the transformed pandas DataFrame containing mean-encoded categorical features</span>
+<span class="string">        """</span>
+        X_new = X.copy()
+        <span class="keyword">if</span> self.target_type == <span class="string">'classification'</span>:
+            skf = StratifiedKFold(self.n_splits)
+        <span class="keyword">else</span>:
+            skf = KFold(self.n_splits)
+        <span class="keyword">if</span> self.target_type == <span class="string">'classification'</span>:
+            self.target_values = sorted(set(y))
+            self.learned_stats = {<span class="string">'{}_pred_{}'</span>.format(variable, target): [] <span class="keyword">for</span> variable, target <span class="keyword">in</span> product(self.categorical_features, self.target_values)}
+            <span class="keyword">for</span> variable, target <span class="keyword">in</span> product(self.categorical_features, self.target_values):
+                nf_name = <span class="string">'{}_pred_{}'</span>.format(variable, target)
+                X_new.loc[:, nf_name] = np.nan
+                <span class="keyword">for</span> large_ind, small_ind <span class="keyword">in</span> skf.split(y, y):
+                    nf_large, nf_small, prior, col_avg_y = MeanEncoder.mean_encode_subroutine(X_new.iloc[large_ind],y.iloc[large_ind],X_new.iloc[small_ind],variable, target, self.prior_weight_func)
+                    X_new.iloc[small_ind, <span class="number">-1</span>] = nf_small
+                    self.learned_stats[nf_name].append((prior, col_avg_y))
+        <span class="keyword">else</span>:
+            self.learned_stats = {<span class="string">'{}_pred'</span>.format(variable): [] <span class="keyword">for</span> variable <span class="keyword">in</span> self.categorical_features}
+            <span class="keyword">for</span> variable <span class="keyword">in</span> self.categorical_features:
+                nf_name = <span class="string">'{}_pred'</span>.format(variable)
+                X_new.loc[:, nf_name] = np.nan
+                <span class="keyword">for</span> large_ind, small_ind <span class="keyword">in</span> skf.split(y, y):
+                    nf_large, nf_small, prior, col_avg_y = MeanEncoder.mean_encode_subroutine(
+                        X_new.iloc[large_ind], y.iloc[large_ind], X_new.iloc[small_ind], variable, <span class="literal">None</span>, self.prior_weight_func)
+                    X_new.iloc[small_ind, <span class="number">-1</span>] = nf_small
+                    self.learned_stats[nf_name].append((prior, col_avg_y))
+        <span class="keyword">return</span> X_new
+
+    <span class="function"><span class="keyword">def</span> <span class="title">transform</span><span class="params">(self, X)</span>:</span>
+        <span class="string">"""</span>
+<span class="string">        :param X: pandas DataFrame, n_samples * n_features</span>
+<span class="string">        :return X_new: the transformed pandas DataFrame containing mean-encoded categorical features</span>
+<span class="string">        """</span>
+        X_new = X.copy()
+        <span class="keyword">if</span> self.target_type == <span class="string">'classification'</span>:
+            <span class="keyword">for</span> variable, target <span class="keyword">in</span> product(self.categorical_features, self.target_values):
+                nf_name = <span class="string">'{}_pred_{}'</span>.format(variable, target)
+                X_new[nf_name] = <span class="number">0</span>
+                <span class="keyword">for</span> prior, col_avg_y <span class="keyword">in</span> self.learned_stats[nf_name]:
+                    X_new[nf_name] += X_new[[variable]].join(col_avg_y, on=variable).fillna(prior, inplace=<span class="literal">False</span>)[nf_name]
+                X_new[nf_name] /= self.n_splits
+        <span class="keyword">else</span>:
+            <span class="keyword">for</span> variable <span class="keyword">in</span> self.categorical_features:
+                nf_name = <span class="string">'{}_pred'</span>.format(variable)
+                X_new[nf_name] = <span class="number">0</span>
+                <span class="keyword">for</span> prior, col_avg_y <span class="keyword">in</span> self.learned_stats[nf_name]:
+                    X_new[nf_name] += X_new[[variable]].join(col_avg_y, on=variable).fillna(prior, inplace=<span class="literal">False</span>)[nf_name]
+                X_new[nf_name] /= self.n_splits
+        <span class="keyword">return</span> X_new</code></pre>
 
       
     </div>

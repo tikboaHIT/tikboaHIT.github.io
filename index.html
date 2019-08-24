@@ -366,9 +366,18 @@
       
         
           
-            <h1 id="1-CART-Classification-and-Regression-Tree"><a href="#1-CART-Classification-and-Regression-Tree" class="headerlink" title="1.CART(Classification and Regression Tree)"></a>1.CART(Classification and Regression Tree)</h1><p>CART的本质是对特征空间进行二元划分（即CART生成的决策树是一棵二叉树），它能够对类别变量和连续变量进行分裂，分割思路是先对某一维数据进行排序，然后对已经排好的特征进行切分，然后计算衡量指标（分类树用Gini指数，回归树用最小平方值），最后通过指标计算确定最后的划分点。</p>
-<h2 id="1-1-Gini指数"><a href="#1-1-Gini指数" class="headerlink" title="1.1 Gini指数"></a>1.1 Gini指数</h2><p>哈哈</p>
-<script type="math/tex; mode=display">f(x)=x^2</script>
+            <h2 id="CART-Classification-and-Regression-Tree"><a href="#CART-Classification-and-Regression-Tree" class="headerlink" title="CART(Classification and Regression Tree)"></a>CART(Classification and Regression Tree)</h2><p>CART的本质是对特征空间进行二元划分（即CART生成的决策树是一棵二叉树），它能够对类别变量和连续变量进行分裂，分割思路是先对某一维数据进行排序，然后对已经排好的特征进行切分，然后计算衡量指标（分类树用Gini指数，回归树用最小平方值），最后通过指标计算确定最后的划分点。</p>
+<h3 id="Gini指数"><a href="#Gini指数" class="headerlink" title="Gini指数"></a>Gini指数</h3><ul>
+<li>对于给定样本集D的Gini指数：分类问题中，假设有K个类，样本点属于第K类的概率为$p_k$，则概率分布的基尼指数为：$Gini(D)=\sum_{k=1}^K{p_k}{(1-p_k)}$<blockquote>
+<p>1.从Gini指数的数学形式中，可以得知，当$p_1=p_2=…=p_K$的时候Gini指数最大。<br>2.当某些$p_i$较大，即第$i$类的概率较大，样本类别不平衡，判别性较高。</p>
+</blockquote>
+</li>
+<li>在给定特征A的条件下，样本集合D的基尼指数为：$Gini(D,A)=p_1Gini(D_1)+p_2Gini(D_2)$，其中$p_i=\frac{D_i}{D_1+D_2}$，$i\in 1,2$</li>
+<li>与信息熵的关系，信息熵定义为$Ent(D)=-\sum_{k=1}^K{p_k}{\log p_k}$，令$f(p_k)=-\log p_k \approx -\ln p_k$，对该式在$p=1$处做一阶泰勒展开，得到：<script type="math/tex; mode=display">f(p_k)\approx -\ln p_k \approx f(1) + f'(1)*(p_k-1) = 1-p_k</script>带入信息熵的公式，可以得到和基尼系数一致的公式，也即是说<strong>基尼指数是信息熵中，$-\log p$在$p=1$处一阶泰勒展开后的结果！所以两者都可以用来度量数据集的纯度</strong></li>
+</ul>
+<h3 id="Gini指数例子"><a href="#Gini指数例子" class="headerlink" title="Gini指数例子"></a>Gini指数例子</h3><p><img src="/images/CART_Example1.png" alt><br><strong>对于离散变量</strong><br>数据集关于第一个特征维度的Gini指数的计算就是：</p>
+<script type="math/tex; mode=display">Gini(D,CarType)=\frac{9+7}{9+7+1+3}[2*\frac{9}{9+7}*(1-\frac{9}{9+7})]+\frac{1+3}{9+7+1+3}[2*\frac{1}{1+3}*(1-\frac{1}{1+3})]</script><p><strong>对于连续变量</strong><br>因为连续变量的部分已经通过某一个值进行了划分，所以计算的时候和离散变量的计算类似</p>
+
           
         
       

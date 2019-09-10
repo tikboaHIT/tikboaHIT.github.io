@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Classification,Regression,Tree,">
+  <meta name="keywords" content="Detection,">
 
 
 
@@ -79,20 +79,24 @@
 
 
 
-<meta name="description" content="CART(Classification and Regression Tree)CART的本质是对特征空间进行二元划分（即CART生成的决策树是一棵二叉树），它能够对类别变量和连续变量进行分裂，分割思路是先对某一维数据进行排序，然后对已经排好的特征进行切分，然后计算衡量指标（分类树用Gini指数，回归树用最小平方值），最后通过指标计算确定最后的划分点。 Gini指数 对于给定样本集D的Gini指数">
-<meta name="keywords" content="Classification,Regression,Tree">
+<meta name="description" content="概要Anchor的设计是现今大多数目标检测框架的基础，高性能的目标检测框架通常依赖于密集的Anchors的设计，这些Anchors基于预定义的尺度与长宽比。 本文提出了GA-RPN利用图像的语义信息指导Anchor的生成，联合两条支路，一路预测物体的中心点位置，另外一路预测对应位置的尺度和长宽比。此外为了保持特征的一致性，采用了一个Feature adaption module。 方法Anchor">
+<meta name="keywords" content="Detection">
 <meta property="og:type" content="article">
-<meta property="og:title" content="决策树">
-<meta property="og:url" content="http://yoursite.com/2019/08/24/决策树/index.html">
+<meta property="og:title" content="GA-RPN论文阅读">
+<meta property="og:url" content="http://yoursite.com/2019/09/03/GA-RPN论文阅读/index.html">
 <meta property="og:site_name" content="tikboa&#39;s blog">
-<meta property="og:description" content="CART(Classification and Regression Tree)CART的本质是对特征空间进行二元划分（即CART生成的决策树是一棵二叉树），它能够对类别变量和连续变量进行分裂，分割思路是先对某一维数据进行排序，然后对已经排好的特征进行切分，然后计算衡量指标（分类树用Gini指数，回归树用最小平方值），最后通过指标计算确定最后的划分点。 Gini指数 对于给定样本集D的Gini指数">
+<meta property="og:description" content="概要Anchor的设计是现今大多数目标检测框架的基础，高性能的目标检测框架通常依赖于密集的Anchors的设计，这些Anchors基于预定义的尺度与长宽比。 本文提出了GA-RPN利用图像的语义信息指导Anchor的生成，联合两条支路，一路预测物体的中心点位置，另外一路预测对应位置的尺度和长宽比。此外为了保持特征的一致性，采用了一个Feature adaption module。 方法Anchor">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/images/CART_Example1.png">
-<meta property="og:updated_time" content="2019-08-24T14:19:28.787Z">
+<meta property="og:image" content="http://yoursite.com/images/网络整体框架.png">
+<meta property="og:image" content="http://yoursite.com/images/可变卷积.png">
+<meta property="og:image" content="http://yoursite.com/images/anchor_location_targets.png">
+<meta property="og:image" content="http://yoursite.com/images/GA_Faster_rcnn.png">
+<meta property="og:image" content="http://yoursite.com/images/GA_RPN_消融研究.png">
+<meta property="og:updated_time" content="2019-09-10T03:38:35.349Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="决策树">
-<meta name="twitter:description" content="CART(Classification and Regression Tree)CART的本质是对特征空间进行二元划分（即CART生成的决策树是一棵二叉树），它能够对类别变量和连续变量进行分裂，分割思路是先对某一维数据进行排序，然后对已经排好的特征进行切分，然后计算衡量指标（分类树用Gini指数，回归树用最小平方值），最后通过指标计算确定最后的划分点。 Gini指数 对于给定样本集D的Gini指数">
-<meta name="twitter:image" content="http://yoursite.com/images/CART_Example1.png">
+<meta name="twitter:title" content="GA-RPN论文阅读">
+<meta name="twitter:description" content="概要Anchor的设计是现今大多数目标检测框架的基础，高性能的目标检测框架通常依赖于密集的Anchors的设计，这些Anchors基于预定义的尺度与长宽比。 本文提出了GA-RPN利用图像的语义信息指导Anchor的生成，联合两条支路，一路预测物体的中心点位置，另外一路预测对应位置的尺度和长宽比。此外为了保持特征的一致性，采用了一个Feature adaption module。 方法Anchor">
+<meta name="twitter:image" content="http://yoursite.com/images/网络整体框架.png">
 
 
 
@@ -122,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/24/决策树/">
+  <link rel="canonical" href="http://yoursite.com/2019/09/03/GA-RPN论文阅读/">
 
 
 
 
 
-  <title>决策树 | tikboa's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>GA-RPN论文阅读 | tikboa's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -265,7 +269,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/决策树/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/03/GA-RPN论文阅读/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tik boa">
@@ -282,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">决策树</h1>
+          <h1 class="post-title" itemprop="name headline">GA-RPN论文阅读</h1>
         
 
         <div class="post-meta">
@@ -294,8 +298,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T15:47:21+08:00">
-                2019-08-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-03T21:15:47+08:00">
+                2019-09-03
               </time>
             
 
@@ -317,8 +321,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning</span>
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
                   </a>
                 </span>
 
@@ -334,7 +338,7 @@
 
           
           
-             <span id="/2019/08/24/决策树/" class="leancloud_visitors" data-flag-title="决策树">
+             <span id="/2019/09/03/GA-RPN论文阅读/" class="leancloud_visitors" data-flag-title="GA-RPN论文阅读">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -365,17 +369,34 @@
       
 
       
-        <h2 id="CART-Classification-and-Regression-Tree"><a href="#CART-Classification-and-Regression-Tree" class="headerlink" title="CART(Classification and Regression Tree)"></a>CART(Classification and Regression Tree)</h2><p>CART的本质是对特征空间进行二元划分（即CART生成的决策树是一棵二叉树），它能够对类别变量和连续变量进行分裂，分割思路是先对某一维数据进行排序，然后对已经排好的特征进行切分，然后计算衡量指标（分类树用Gini指数，回归树用最小平方值），最后通过指标计算确定最后的划分点。</p>
-<h3 id="Gini指数"><a href="#Gini指数" class="headerlink" title="Gini指数"></a>Gini指数</h3><ul>
-<li>对于给定样本集D的Gini指数：分类问题中，假设有K个类，样本点属于第K类的概率为$p_k$，则概率分布的基尼指数为：$Gini(D)=\sum_{k=1}^K{p_k}{(1-p_k)}$<blockquote>
-<p>1.从Gini指数的数学形式中，可以得知，当$p_1=p_2=…=p_K$的时候Gini指数最大。<br>2.当某些$p_i$较大，即第$i$类的概率较大，样本类别不平衡，判别性较高。</p>
+        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>Anchor的设计是现今大多数目标检测框架的基础，高性能的目标检测框架通常依赖于密集的Anchors的设计，这些Anchors基于预定义的尺度与长宽比。 本文提出了GA-RPN利用图像的语义信息指导Anchor的生成，联合两条支路，一路预测物体的中心点位置，另外一路预测对应位置的尺度和长宽比。此外为了保持特征的一致性，采用了一个Feature adaption module。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>Anchor的设计遵循着两个原则：  </p>
+<ul>
+<li><p>alignment</p>
+<blockquote>
+<p>to use convolutional features as anchor representations, anchor centers need to be well aligned with feature map pixels.</p>
 </blockquote>
 </li>
-<li>在给定特征A的条件下，样本集合D的基尼指数为：$Gini(D,A)=p_1Gini(D_1)+p_2Gini(D_2)$，其中$p_i=\frac{D_i}{D_1+D_2}$，$i\in 1,2$</li>
-<li>与信息熵的关系，信息熵定义为$Ent(D)=-\sum_{k=1}^K{p_k}{\log p_k}$，令$f(p_k)=-\log p_k \approx -\ln p_k$，对该式在$p=1$处做一阶泰勒展开，得到：<script type="math/tex; mode=display">f(p_k)\approx -\ln p_k \approx f(1) + f'(1)*(p_k-1) = 1-p_k</script>带入信息熵的公式，可以得到和基尼系数一致的公式，也即是说<strong>基尼指数是信息熵中，$-\log p$在$p=1$处一阶泰勒展开后的结果！所以两者都可以用来度量数据集的纯度</strong></li>
+<li><p>consistency  </p>
+<blockquote>
+<p>the receptive field and semantic scope are consistent in different regions of a feature map, so the scale and shape of anchors across different locations should be consistent.</p>
+</blockquote>
+</li>
 </ul>
-<h3 id="Gini指数例子"><a href="#Gini指数例子" class="headerlink" title="Gini指数例子"></a>Gini指数例子</h3><p><img src="/images/CART_Example1.png" alt><br><strong>对于离散变量</strong><br>数据集关于第一个特征维度的Gini指数的计算就是：</p>
-<script type="math/tex; mode=display">Gini(D,CarType)=\frac{9+7}{9+7+1+3}[2*\frac{9}{9+7}*(1-\frac{9}{9+7})]+\frac{1+3}{9+7+1+3}[2*\frac{1}{1+3}*(1-\frac{1}{1+3})]</script><p><strong>对于连续变量</strong><br>因为连续变量的部分已经通过某一个值进行了划分，所以计算的时候和离散变量的计算类似</p>
+<p>论文主要围绕着这个公式展开：</p>
+<script type="math/tex; mode=display">p(x,y,w,h|I) = p(x,y|I)p(w,h|x,y,I)</script><p>该公式主要抓住了两个重要的直觉，(1) 物体可能只存在一张图像的某些区域；(2) 物体的形状，尺度，比例和它的位置有关。<br><img src="/images/网络整体框架.png" alt><br>该网络主要分为三个部分，Anchor Location Prediction, Anchor Shape Prediction, Anchor-Guided Feature Adaption, 以下将对这三个部分分别介绍。</p>
+<h3 id="Anchor-Location-Prediction"><a href="#Anchor-Location-Prediction" class="headerlink" title="Anchor Location Prediction"></a>Anchor Location Prediction</h3><p>对于特征图$F_I$而言，该分支主要预测对应的位置上物体存在的概率$p(i,j|F_I)$其中$i,j$表示在特征图上的位置，对应的在原始图片的位置为为$((i+\frac{1}{2})s,(j+\frac{1}{2})s)$,其中s是特征图上的步进长度。该分支$N_L$使用一个$1x1$的卷积层，然后通过sigmoid函数将卷积后的结果转为概率。基于上述产生的概率图，然后设定一个阈值$\epsilon_L$滤除大约$90%$的regions。由于大部分区域并不包含物体，因此使用<strong>masked convolution</strong>替代后续的卷积层。</p>
+<h3 id="Anchor-Shape-Prediction"><a href="#Anchor-Shape-Prediction" class="headerlink" title="Anchor Shape Prediction"></a>Anchor Shape Prediction</h3><p>确定物体的可能位置后，下一步就是预测物体的形状。基于特征图$F_I$该分支预测对应位置上$(w,h)$,然而直接预测这两个值，难度较大，因此通过预测$dw$和$dh$,然后通过如下公式映射到对应的$w$和$h$:</p>
+<script type="math/tex; mode=display">w=\sigma\cdot{s}\cdot{e^{dw}}, h=\sigma\cdot{s}\cdot{e^{dh}}</script><p>其中$s$是特征图上的步进长度，$\sigma$是缩放因子(该超参数设置为8),该分支$N_S$同样由一个$1x1$的卷积层组成，然后产生一个两通道的图，包含$dw$和$dh$。<br>此外改论文中指出通过这样的设计，它可以更好的捕捉更高或更宽的物体。</p>
+<h3 id="Anchor-Guided-Feature-Adaptation"><a href="#Anchor-Guided-Feature-Adaptation" class="headerlink" title="Anchor-Guided Feature Adaptation"></a>Anchor-Guided Feature Adaptation</h3><p>传统的RPN网络中，由于每个位置的Anchor有相同的尺度和长宽比，因此特征图可以学习到一致性的表达，然而在GA-RPN中，Anchor的形状因位置而异。若是依然根据之前的方法，则违背了一致性原则。为此，引出了anchor-guided feature adaptation模块，该模块的公式化表达如下所示：</p>
+<script type="math/tex; mode=display">f'_i=N_T(f_i,w_i,h_i)</script><p>其中$f_i$是在$i$-th位置的特征，$(w_i,h_i)$是对应的anchor的形状。该分支首先通过一个$1x1$的卷积从anchor shape预测分支输出一个offset field，接着运用可变卷积联合原始的特征图和offset field获得$f’_I$。后续的基于该adapted features进行分类与回归。<br><img src="/images/可变卷积.png" alt><br>原始的可变卷积中，offset field是通过feature map来预测的，而该分支中的offset field是通过anchor shape来预测的，这也是为何称之为anchor-guided feature adaptation模块。</p>
+<h3 id="training"><a href="#training" class="headerlink" title="training"></a>training</h3><p><strong>joint objective</strong>  </p>
+<script type="math/tex; mode=display">L=\lambda_1*L_{loc}+\lambda_2*L_{shape}+L_{cls}+L_{reg}</script><p><strong>anchor location targets</strong><br>定义三个anchor location区域，CR(center region),IR(ignore region),OR(outside region)  </p>
+<blockquote>
+<p>CR是中心区域的周围区域，IR是中心区域外围的一部分区域，OR是除了CR和IR外面的所有区域。其中存在两个超参数,一个是CR的范围$\sigma_1$一个是IR的范围$\sigma_2$</p>
+</blockquote>
+<p>由于CR占比较小，所以训练loss采用Focal loss.<br><img src="/images/anchor_location_targets.png" alt><br><strong>anchor shape targets</strong><br>anchor形状的优化一般分为两步，首先将Anchor与对应的ground-truth bbox进行匹配，然后迭代的计算最优的$\hat{w}$和$\hat{h}$使其IoU最大化。之前的RPN网络分配一个候选的anchor给ground-truth bbox。但是对于GA-RPN则不适用，因为$w$和$h$并没有预定义。然后提出的解决措施是，基于$(x,y)$位置，采样9对不同尺度和长宽比的anchor。对于loss函数的优化采用的是<strong>bounded iou loss</strong>。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>超参数设置：$\sigma_1=0.2$，$\sigma_2=0.5$，$\lambda_1=1$，$\lambda_2=0.1$<br>与Fast_RCNN, Faster_RCNN, RetinaNet对比实验<br><img src="/images/GA_Faster_rcnn.png" alt><br>消融实验<br><img src="/images/GA_RPN_消融研究.png" alt></p>
 
       
     </div>
@@ -393,11 +414,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Classification/" rel="tag"># Classification</a>
-          
-            <a href="/tags/Regression/" rel="tag"># Regression</a>
-          
-            <a href="/tags/Tree/" rel="tag"># Tree</a>
+            <a href="/tags/Detection/" rel="tag"># Detection</a>
           
         </div>
       
@@ -410,8 +427,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/22/article-title/" rel="next" title="md写博客">
-                <i class="fa fa-chevron-left"></i> md写博客
+              <a href="/2019/08/24/决策树/" rel="next" title="决策树">
+                <i class="fa fa-chevron-left"></i> 决策树
               </a>
             
           </div>
@@ -419,10 +436,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/03/GA-RPN论文阅读/" rel="prev" title="GA-RPN论文阅读">
-                GA-RPN论文阅读 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -572,7 +585,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CART-Classification-and-Regression-Tree"><span class="nav-number">1.</span> <span class="nav-text">CART(Classification and Regression Tree)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gini指数"><span class="nav-number">1.1.</span> <span class="nav-text">Gini指数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gini指数例子"><span class="nav-number">1.2.</span> <span class="nav-text">Gini指数例子</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Anchor-Location-Prediction"><span class="nav-number">2.1.</span> <span class="nav-text">Anchor Location Prediction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Anchor-Shape-Prediction"><span class="nav-number">2.2.</span> <span class="nav-text">Anchor Shape Prediction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Anchor-Guided-Feature-Adaptation"><span class="nav-number">2.3.</span> <span class="nav-text">Anchor-Guided Feature Adaptation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#training"><span class="nav-number">2.4.</span> <span class="nav-text">training</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">3.</span> <span class="nav-text">实验</span></a></li></ol></div>
             
 
           </div>

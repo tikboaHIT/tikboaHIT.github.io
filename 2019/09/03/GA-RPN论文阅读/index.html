@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/images/anchor_location_targets.png">
 <meta property="og:image" content="http://yoursite.com/images/GA_Faster_rcnn.png">
 <meta property="og:image" content="http://yoursite.com/images/GA_RPN_消融研究.png">
-<meta property="og:updated_time" content="2019-09-10T03:38:35.349Z">
+<meta property="og:updated_time" content="2019-09-10T03:55:59.634Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GA-RPN论文阅读">
 <meta name="twitter:description" content="概要Anchor的设计是现今大多数目标检测框架的基础，高性能的目标检测框架通常依赖于密集的Anchors的设计，这些Anchors基于预定义的尺度与长宽比。 本文提出了GA-RPN利用图像的语义信息指导Anchor的生成，联合两条支路，一路预测物体的中心点位置，另外一路预测对应位置的尺度和长宽比。此外为了保持特征的一致性，采用了一个Feature adaption module。 方法Anchor">
@@ -385,11 +385,11 @@
 </ul>
 <p>论文主要围绕着这个公式展开：</p>
 <script type="math/tex; mode=display">p(x,y,w,h|I) = p(x,y|I)p(w,h|x,y,I)</script><p>该公式主要抓住了两个重要的直觉，(1) 物体可能只存在一张图像的某些区域；(2) 物体的形状，尺度，比例和它的位置有关。<br><img src="/images/网络整体框架.png" alt><br>该网络主要分为三个部分，Anchor Location Prediction, Anchor Shape Prediction, Anchor-Guided Feature Adaption, 以下将对这三个部分分别介绍。</p>
-<h3 id="Anchor-Location-Prediction"><a href="#Anchor-Location-Prediction" class="headerlink" title="Anchor Location Prediction"></a>Anchor Location Prediction</h3><p>对于特征图$F_I$而言，该分支主要预测对应的位置上物体存在的概率$p(i,j|F_I)$其中$i,j$表示在特征图上的位置，对应的在原始图片的位置为为$((i+\frac{1}{2})s,(j+\frac{1}{2})s)$,其中s是特征图上的步进长度。该分支$N_L$使用一个$1x1$的卷积层，然后通过sigmoid函数将卷积后的结果转为概率。基于上述产生的概率图，然后设定一个阈值$\epsilon_L$滤除大约$90%$的regions。由于大部分区域并不包含物体，因此使用<strong>masked convolution</strong>替代后续的卷积层。</p>
+<h3 id="Anchor-Location-Prediction"><a href="#Anchor-Location-Prediction" class="headerlink" title="Anchor Location Prediction"></a>Anchor Location Prediction</h3><p>对于特征图$F_I$而言，该分支主要预测对应的位置上物体存在的概率$p(i,j|F_I)$其中$i,j$表示在特征图上的位置，对应的在原始图片的位置为为$((i+\frac{1}{2})s,(j+\frac{1}{2})s)$,其中s是特征图上的步进长度。该分支$N_L$使用一个$1\times1$的卷积层，然后通过sigmoid函数将卷积后的结果转为概率。基于上述产生的概率图，然后设定一个阈值$\epsilon_L$滤除大约$90%$的regions。由于大部分区域并不包含物体，因此使用<strong>masked convolution</strong>替代后续的卷积层。</p>
 <h3 id="Anchor-Shape-Prediction"><a href="#Anchor-Shape-Prediction" class="headerlink" title="Anchor Shape Prediction"></a>Anchor Shape Prediction</h3><p>确定物体的可能位置后，下一步就是预测物体的形状。基于特征图$F_I$该分支预测对应位置上$(w,h)$,然而直接预测这两个值，难度较大，因此通过预测$dw$和$dh$,然后通过如下公式映射到对应的$w$和$h$:</p>
-<script type="math/tex; mode=display">w=\sigma\cdot{s}\cdot{e^{dw}}, h=\sigma\cdot{s}\cdot{e^{dh}}</script><p>其中$s$是特征图上的步进长度，$\sigma$是缩放因子(该超参数设置为8),该分支$N_S$同样由一个$1x1$的卷积层组成，然后产生一个两通道的图，包含$dw$和$dh$。<br>此外改论文中指出通过这样的设计，它可以更好的捕捉更高或更宽的物体。</p>
+<script type="math/tex; mode=display">w=\sigma\cdot{s}\cdot{e^{dw}}, h=\sigma\cdot{s}\cdot{e^{dh}}</script><p>其中$s$是特征图上的步进长度，$\sigma$是缩放因子(该超参数设置为8),该分支$N_S$同样由一个$1\times1$的卷积层组成，然后产生一个两通道的图，包含$dw$和$dh$。<br>此外改论文中指出通过这样的设计，它可以更好的捕捉更高或更宽的物体。</p>
 <h3 id="Anchor-Guided-Feature-Adaptation"><a href="#Anchor-Guided-Feature-Adaptation" class="headerlink" title="Anchor-Guided Feature Adaptation"></a>Anchor-Guided Feature Adaptation</h3><p>传统的RPN网络中，由于每个位置的Anchor有相同的尺度和长宽比，因此特征图可以学习到一致性的表达，然而在GA-RPN中，Anchor的形状因位置而异。若是依然根据之前的方法，则违背了一致性原则。为此，引出了anchor-guided feature adaptation模块，该模块的公式化表达如下所示：</p>
-<script type="math/tex; mode=display">f'_i=N_T(f_i,w_i,h_i)</script><p>其中$f_i$是在$i$-th位置的特征，$(w_i,h_i)$是对应的anchor的形状。该分支首先通过一个$1x1$的卷积从anchor shape预测分支输出一个offset field，接着运用可变卷积联合原始的特征图和offset field获得$f’_I$。后续的基于该adapted features进行分类与回归。<br><img src="/images/可变卷积.png" alt><br>原始的可变卷积中，offset field是通过feature map来预测的，而该分支中的offset field是通过anchor shape来预测的，这也是为何称之为anchor-guided feature adaptation模块。</p>
+<script type="math/tex; mode=display">f'_i=N_T(f_i,w_i,h_i)</script><p>其中$f_i$是在$i$-th位置的特征，$(w_i,h_i)$是对应的anchor的形状。该分支首先通过一个$1\times1$的卷积从anchor shape预测分支输出一个offset field，接着运用可变卷积联合原始的特征图和offset field获得$f’_I$。后续的基于该adapted features进行分类与回归。<br><img src="/images/可变卷积.png" alt><br>原始的可变卷积中，offset field是通过feature map来预测的，而该分支中的offset field是通过anchor shape来预测的，这也是为何称之为anchor-guided feature adaptation模块。</p>
 <h3 id="training"><a href="#training" class="headerlink" title="training"></a>training</h3><p><strong>joint objective</strong>  </p>
 <script type="math/tex; mode=display">L=\lambda_1*L_{loc}+\lambda_2*L_{shape}+L_{cls}+L_{reg}</script><p><strong>anchor location targets</strong><br>定义三个anchor location区域，CR(center region),IR(ignore region),OR(outside region)  </p>
 <blockquote>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="GNN,">
+  <meta name="keywords" content="Detection,bbox regression,">
 
 
 
@@ -79,24 +79,23 @@
 
 
 
-<meta name="description" content="图的基本定义设$G=(V,E)$是一个无向图，其中顶点集$V={v_1,…,v_n}$，对于一个无向图而言，$w_{ij}=w_{ji}$。一个顶点的$v_i\in{V}$的按照如下定义： d_i = \sum_{j=1}{w_{ij}}定义一个指示向量，$\mathbb{1}_A={f_1,…,f_n}’$，当向量$v_i\in A$时，$f_i=1$，否则$f_i=0$,对于两个不相交的集合，">
-<meta name="keywords" content="GNN">
+<meta name="description" content="概要在目标检测数据集中，ground-truth bounding box在一些情况下经常会有一些内在的歧义。这些歧义通常来源于以下几个方面：a) 不准确的标记；b) 由于物体拥挤产生歧义；c) 物体本身的边界就存在歧义。本文提出了一个新的bbox regression loss。该loss将bounding box transformation与localization variance 联合学">
+<meta name="keywords" content="Detection,bbox regression">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图的基础知识">
-<meta property="og:url" content="http://yoursite.com/2019/09/15/图的基础知识/index.html">
+<meta property="og:title" content="Bounding Box Regression with Uncertainty for Accurate Object Detection">
+<meta property="og:url" content="http://yoursite.com/2019/10/06/Bbox-Regression-with-Uncertainty/index.html">
 <meta property="og:site_name" content="tikboa&#39;s blog">
-<meta property="og:description" content="图的基本定义设$G=(V,E)$是一个无向图，其中顶点集$V={v_1,…,v_n}$，对于一个无向图而言，$w_{ij}=w_{ji}$。一个顶点的$v_i\in{V}$的按照如下定义： d_i = \sum_{j=1}{w_{ij}}定义一个指示向量，$\mathbb{1}_A={f_1,…,f_n}’$，当向量$v_i\in A$时，$f_i=1$，否则$f_i=0$,对于两个不相交的集合，">
+<meta property="og:description" content="概要在目标检测数据集中，ground-truth bounding box在一些情况下经常会有一些内在的歧义。这些歧义通常来源于以下几个方面：a) 不准确的标记；b) 由于物体拥挤产生歧义；c) 物体本身的边界就存在歧义。本文提出了一个新的bbox regression loss。该loss将bounding box transformation与localization variance 联合学">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/images/unnormalizer%20spectral%20clustering.png">
-<meta property="og:image" content="http://yoursite.com/images/normalized%20spectral%20clustering.png">
-<meta property="og:image" content="http://yoursite.com/images/normalized%20spectral%20clustering%202.png">
-<meta property="og:image" content="http://yoursite.com/images/unnorm%20knn%20graph.png">
-<meta property="og:image" content="http://yoursite.com/images/unorm%20full%20graph.png">
-<meta property="og:updated_time" content="2019-10-02T14:02:07.868Z">
+<meta property="og:image" content="http://yoursite.com/images/微信图片_20191006162817.png">
+<meta property="og:image" content="http://yoursite.com/images/微信图片_20191006153443.png">
+<meta property="og:image" content="http://yoursite.com/images/微信图片_20191006162653.png">
+<meta property="og:image" content="http://yoursite.com/images/微信图片_20191006163055.png">
+<meta property="og:updated_time" content="2019-10-06T09:05:19.522Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="图的基础知识">
-<meta name="twitter:description" content="图的基本定义设$G=(V,E)$是一个无向图，其中顶点集$V={v_1,…,v_n}$，对于一个无向图而言，$w_{ij}=w_{ji}$。一个顶点的$v_i\in{V}$的按照如下定义： d_i = \sum_{j=1}{w_{ij}}定义一个指示向量，$\mathbb{1}_A={f_1,…,f_n}’$，当向量$v_i\in A$时，$f_i=1$，否则$f_i=0$,对于两个不相交的集合，">
-<meta name="twitter:image" content="http://yoursite.com/images/unnormalizer%20spectral%20clustering.png">
+<meta name="twitter:title" content="Bounding Box Regression with Uncertainty for Accurate Object Detection">
+<meta name="twitter:description" content="概要在目标检测数据集中，ground-truth bounding box在一些情况下经常会有一些内在的歧义。这些歧义通常来源于以下几个方面：a) 不准确的标记；b) 由于物体拥挤产生歧义；c) 物体本身的边界就存在歧义。本文提出了一个新的bbox regression loss。该loss将bounding box transformation与localization variance 联合学">
+<meta name="twitter:image" content="http://yoursite.com/images/微信图片_20191006162817.png">
 
 
 
@@ -126,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/09/15/图的基础知识/">
+  <link rel="canonical" href="http://yoursite.com/2019/10/06/Bbox-Regression-with-Uncertainty/">
 
 
 
 
 
-  <title>图的基础知识 | tikboa's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Bounding Box Regression with Uncertainty for Accurate Object Detection | tikboa's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -269,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/15/图的基础知识/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Bbox-Regression-with-Uncertainty/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tik boa">
@@ -286,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">图的基础知识</h1>
+          <h1 class="post-title" itemprop="name headline">Bounding Box Regression with Uncertainty for Accurate Object Detection</h1>
         
 
         <div class="post-meta">
@@ -298,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-15T15:29:55+08:00">
-                2019-09-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T09:07:20+08:00">
+                2019-10-06
               </time>
             
 
@@ -338,7 +337,7 @@
 
           
           
-             <span id="/2019/09/15/图的基础知识/" class="leancloud_visitors" data-flag-title="图的基础知识">
+             <span id="/2019/10/06/Bbox-Regression-with-Uncertainty/" class="leancloud_visitors" data-flag-title="Bounding Box Regression with Uncertainty for Accurate Object Detection">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -369,119 +368,37 @@
       
 
       
-        <h2 id="图的基本定义"><a href="#图的基本定义" class="headerlink" title="图的基本定义"></a>图的基本定义</h2><p>设$G=(V,E)$是一个无向图，其中顶点集$V={v_1,…,v_n}$，对于一个无向图而言，$w_{ij}=w_{ji}$。一个顶点的$v_i\in{V}$的按照如下定义：</p>
-<script type="math/tex; mode=display">d_i = \sum_{j=1}{w_{ij}}</script><p>定义一个指示向量，$\mathbb{1}_A={f_1,…,f_n}’$，当向量$v_i\in A$时，$f_i=1$，否则$f_i=0$,对于两个不相交的集合，定义：</p>
-<script type="math/tex; mode=display">W(A,B):=\sum_{i\in A,j\in B}{w_{ij}}</script><p>对于一个顶点集合$A\subset V$的大小有如下两种定义:<br>$A$中所包含顶点的数量</p>
-<script type="math/tex; mode=display">vol(A):=\sum_{i\in A}{d_i}</script><h2 id="图的拉普拉斯矩阵以及它的的特性"><a href="#图的拉普拉斯矩阵以及它的的特性" class="headerlink" title="图的拉普拉斯矩阵以及它的的特性"></a>图的拉普拉斯矩阵以及它的的特性</h2><h3 id="未归一化的图拉普拉斯矩阵"><a href="#未归一化的图拉普拉斯矩阵" class="headerlink" title="未归一化的图拉普拉斯矩阵"></a>未归一化的图拉普拉斯矩阵</h3><p>未归一化的拉普拉斯矩阵定义如下：</p>
-<script type="math/tex; mode=display">L=D-W</script><p><em>特性1. 对于每个向量$f\in R_n$，可以得到：</em></p>
-<script type="math/tex; mode=display">f'Lf=\frac{1}{2}\sum_{i,j=1}^{n}{w_{i,j}}{(f_i-f_j)}^2</script><p>证明：通过$d_i$的定义，可以得到：</p>
-<script type="math/tex; mode=display">f'Lf=f'Df-f'Wf=\sum_{i=1}^{n}{d_i}{f_i}^2-\sum_{i,j=1}^{n}{f_i}{f_j}{w_{ij}}</script><script type="math/tex; mode=display">=\frac{1}{2}(\sum_{i=1}^{n}{d_i}{f_i}^2-2\sum_{i,j=1}^{n}{f_i}{f_j}{w_{ij}}+\sum_{j=1}^{n}{d_j}{f_j}^2)</script><script type="math/tex; mode=display">=\frac{1}{2}\sum_{i,j=1}^{n}{w_{i,j}}{(f_i-f_j)}^2</script><p><em>特性2. $L$是对称，半正定矩阵：</em><br>$L$的对称性来源于$W,D$，半正定矩阵来自于特征1，对于任何向量都满足$f’Lf\ge 0$.</p>
-<p><em>特性3. L最小的特征值是0，对应的特征向量是$\mathbb{1}$</em><br>由$f’Lf=f’\lambda f\ge 0$，且$f’f\ge 0$，可得$\lambda\ge 0$   </p>
-<p><em>特性4. L有n个非负实特征值，$\lambda_n\ge…\lambda_2\ge\lambda_1\ge 0$</em><br>很明显</p>
-<p><em>特征5. 假设G是一个非负权重无向图，那么$L$特征值0的多重性$k$等同于在该图中所包含的连通图的个数，对应的0特征值的特征向量等于这些连通图的指示向量</em><br>证明: 首先假设$k=1$，$f$是该特征值的特征向量，那么可以得知，由于$w_{ij}$都是非负值，所以当两个顶点相连时，则${(f_i-f_j)}^2$必须为0，即$f_i = f_j$。因此，在图中所有顶点只要互相连接，那么$f$对于这些顶点而言，就必须是常量。因此若一个无向图中存在一个连通图，那么$f$在该连通图上为常量，最终可以得到一个常数向量$\mathbb{1}$作为特征值0的特征向量，它同时也是该联通图的指示向量。</p>
-<p>假如顶点按照他们所属的联通图排列，不难想象他们的邻接矩阵$W$是一个块对角的形式，同样的$L$矩阵也是。</p>
+        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>在目标检测数据集中，ground-truth bounding box在一些情况下经常会有一些内在的歧义。这些歧义通常来源于以下几个方面：a) 不准确的标记；b) 由于物体拥挤产生歧义；c) 物体本身的边界就存在歧义。本文提出了一个新的bbox regression loss。该loss将bounding box transformation与localization variance 联合学习。传统的bbox regression没有考虑ground truth bounding boxes的歧义性。此外，当分类分支的分数较高时，bbox regression 也被默认为是准确的。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h3><p><img src="/images/微信图片_20191006162817.png" alt></p>
+<h3 id="bbox-参数化"><a href="#bbox-参数化" class="headerlink" title="bbox 参数化"></a>bbox 参数化</h3><p>不同于R-CNN系列算法对$(x,y,w,h)$进行回归，该文提出对$(x_1,y_1,x_2,y_2)$进行回归，参数化的定义如下所示：</p>
 <script type="math/tex; mode=display">
-  \begin{pmatrix}
-  L_1    &        &     &   \\
-  &      & L_2    &     &   \\
-  &      &        & \ddots &  \\
-  &      &        &     & L_k 
-  \end{pmatrix}</script><p>其中的每个块$L_i$都是一个拉普拉斯矩阵，对应的是第$i$个连通图。<strong>由于它是块对角矩阵，所以$L$的频谱是$L_i$谱的并集</strong>，$L$的特征向量就是$L_i$的特征向量，其它块的位置对应为$0$。因此，$L$有许多特征为0的特征值，并且0特征值对应的特征向量为相应的连通图的指示向量。</p>
-<h3 id="归一化的图拉普拉斯矩阵"><a href="#归一化的图拉普拉斯矩阵" class="headerlink" title="归一化的图拉普拉斯矩阵"></a>归一化的图拉普拉斯矩阵</h3><p>通常文献中有两种形式的图归一化矩阵，两种矩阵互相关联，定义如下所示：</p>
-<script type="math/tex; mode=display">L_{sym}:=D^{-\frac{1}{2}}LD^{-\frac{1}{2}}=I-D^{-\frac{1}{2}}WD^{-\frac{1}{2}}</script><script type="math/tex; mode=display">L_{rw}:=D^{-1}L=I-D^{-1}W</script><p>其中第一个$L_{sym}$是对称矩阵，而第二个$L_{rw}$是随机游走矩阵，相对于未归一化的拉普拉斯矩阵而言，归一化的拉普拉斯矩阵具有如下类似的性质。<br><em>特性1. 对于每个向量$f\in R_n$，可以得到：</em></p>
-<script type="math/tex; mode=display">f'Lf=\frac{1}{2}\sum_{i,j=1}^{n}{w_{i,j}}{(\frac{f_i}{\sqrt{d_i}}-\frac{f_j}{\sqrt(d_j)})}^2</script><p>证明类似于未归一化的拉普拉斯矩阵，此处不再赘述。</p>
-<h2 id="谱聚类算法"><a href="#谱聚类算法" class="headerlink" title="谱聚类算法"></a>谱聚类算法</h2><p><strong>unnormalized spectral clustering</strong><br><img src="/images/unnormalizer spectral clustering.png" alt><br><strong>normalized spectral clustering</strong><br><img src="/images/normalized spectral clustering.png" alt><br><img src="/images/normalized spectral clustering 2.png" alt></p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p><strong>unnorm knn graph</strong><br><img src="/images/unnorm knn graph.png" alt><br><strong>unnorm knn graph</strong><br><img src="/images/unorm full graph.png" alt></p>
-<h2 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h2><pre><code class="lang-python"># -*- coding: utf-8 -*-
-# @Time    : 2019/10/2 19:38
-# @Author  : zhao pengfei
-# @Email   : zsonghuan@gmail.com
-# @File    : spectral_clustering.py
-
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import matplotlib
-matplotlib.use(&quot;TkAgg&quot;)
-
-def plot_value_vector(value, vector):
-    plt.figure(figsize=(24, 4))
-    plt.subplot(1, 6, 1)
-    plt.scatter(range(1, 11), value[:10])
-    plt.subplot(1, 6, 2)
-    plt.plot(vector[:, 0])
-    plt.subplot(1, 6, 3)
-    plt.plot(vector[:, 1])
-    plt.subplot(1, 6, 4)
-    plt.plot(vector[:, 2])
-    plt.subplot(1, 6, 5)
-    plt.plot(vector[:, 3])
-    plt.subplot(1, 6, 6)
-    plt.plot(vector[:, 4])
-    plt.show()
-
-
-#generate gaussian dataset
-y1 = np.random.normal(2, 0.2, 50)
-y2 = np.random.normal(4, 0.2, 50)
-y3 = np.random.normal(6, 0.2, 50)
-y4 = np.random.normal(8, 0.2, 50)
-y = np.hstack((y1, y2, y3, y4))[:,None]
-# plt.hist(y, bins=300)
-# plt.title(&quot;Histogram of the sample&quot;)
-# plt.show()
-
-
-data = np.repeat(y, 200, axis=1)
-data_t = data.T
-
-
-#full graph unnorm
-W = np.exp(-1 * (np.abs(data - data_t) ** 2) / 2)
-#self circle removed
-W = W - np.eye(W.shape[0])
-D = np.zeros_like(W)
-for i in range(W.shape[0]):
-    D[i, i] = np.sum(W[i, :])
-L = D - W
-
-eigenvalue,featurevector=np.linalg.eig(L)
-sort_eigenvalue_index = np.argsort(eigenvalue)
-
-sorted_value = eigenvalue[sort_eigenvalue_index]
-sorted_vector = featurevector[:, sort_eigenvalue_index]
-
-plot_value_vector(sorted_value, sorted_vector)
-
-#knn graph unnorm
-W = np.exp(-1 * (np.abs(data - data_t) ** 2) / 2)
-#self circle removed
-W = W - np.eye(W.shape[0])
-
-for i in range(W.shape[0]):
-    row = W[i, :]
-    sort_index = np.argsort(row)
-    knn_value = W[i, sort_index[-10:]]
-    knn_index = sort_index[-10:]
-
-    new_value = np.zeros_like(row)
-    new_value[knn_index] = knn_value
-
-    W[i, :] = new_value
-
-D = np.zeros_like(W)
-for i in range(W.shape[0]):
-    D[i, i] = np.sum(W[i, :])
-L = D - W
-
-eigenvalue,featurevector=np.linalg.eig(L)
-sort_eigenvalue_index = np.argsort(eigenvalue)
-
-sorted_value = eigenvalue[sort_eigenvalue_index]
-sorted_vector = featurevector[:, sort_eigenvalue_index]
-
-plot_value_vector(sorted_value, sorted_vector)
-</code></pre>
+t_{x1} = \frac{x_1-x_{1a}}{w_a},t_{x2}=\frac{x_2-x_{2a}}{w_a}\\
+t_{y1} = \frac{y_1-y_{1a}}{h_a},t_{y2}=\frac{y_2-y_{2a}}{h_a}\\
+t_{x1}^* = \frac{x_1^*-x_{1a}}{w_a},t_{x2}^*=\frac{x_2^*-x_{2a}}{w_a}\\
+t_{y1}^* = \frac{y_1^*-y_{1a}}{h_a},t_{y2}^*=\frac{y_2^*-y_{2a}}{h_a}</script><p>接下来，该文假设坐标之间相互独立，为了简化期间，使用单变量的高斯分布：</p>
+<script type="math/tex; mode=display">
+P_\Theta(x)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{\frac{-(x-x_e)^2}{2\sigma^2}}</script><p>其中$\Theta$是学习的参数，$x_e$是估计的bbox坐标，标准差$\sigma$度量估计的不确定性，当$\sigma\rightarrow0$时，意味着网络对于估计的bbox坐标相当确信。<br>真实框的bbox也能表达成一个高斯分布，当$\sigma\rightarrow0$时，该高斯分布转化为Dirac delta函数：</p>
+<script type="math/tex; mode=display">
+P_D(x)=\delta(x-x_g)</script><p>其中$x_g$是真实框的bbox坐标。</p>
+<h3 id="KL损失的bbox回归"><a href="#KL损失的bbox回归" class="headerlink" title="KL损失的bbox回归"></a>KL损失的bbox回归</h3><p>从上述的描述可以得知，最终的目标是最小化$P_\Theta(x)$和$P_D(x)$的KL散度：</p>
+<script type="math/tex; mode=display">
+\hat{\Theta}=\mathop{\arg\min}\limits_{\Theta}\frac{1}{N}\sum{D_{KL}}({P_D(X)}\lVert{P_\Theta(x)})</script><p>因此当使用KL散度作为bbox regresssion时表示$L_{reg}$为:</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray}L_{reg}
+&=&{D_{KL}}({P_D(X)}\lVert{P_\Theta(x)})\\
+&=&\int P_D(X)\log{P_D(X)}\, dx - \int P_D(X)\log{P_\Theta(X)}\, dx\\
+&=&\frac{(x_g-x_e)^2}{2\sigma^2}+\frac{\log{\sigma^2}}{2}+\frac{\log{2\pi}}{2}-H(P_D(x))
+\end{eqnarray}</script><p>由于$\frac{\log{2\pi}}{2}$和$H(P_D(x))$和估计的参数$\Theta$无关，故：</p>
+<script type="math/tex; mode=display">
+L_{reg}\propto\frac{(x_g-x_e)^2}{2\sigma^2}+\frac{1}{2}\log{\sigma^2}</script><p>当$L_{reg}$对$\sigma$求导时，$\sigma$在分母位置，训练初期易出现梯度爆炸，所以为了解决这一问题，使用$a=\log{\sigma^2}$来代替$\sigma$的预测：</p>
+<script type="math/tex; mode=display">
+L_{reg}\propto\frac{e^{-a}}{2}{(x_g-x_e)^2}+\frac{1}{2}a</script><p>类似于smooth L1 loss中对$|x_g-x_e|&gt;1$的处理，KL loss采用同样的处理方式：</p>
+<script type="math/tex; mode=display">
+L_{reg}\propto{e^{-a}}{(|x_g-x_e|-\frac{1}{2})}+\frac{1}{2}a</script><h3 id="方差投票"><a href="#方差投票" class="headerlink" title="方差投票"></a>方差投票</h3><p>最终的检测结果是一系列包含方差的bbox，为了获得更好的结果可以利用这些方差对近邻的bbox加权式的投票：</p>
+<p><img src="/images/微信图片_20191006153443.png" alt></p>
+<p>对接近最大分数bbox和最小方差的bbox赋予高权重，新的坐标计算如下所示：</p>
+<p><img src="/images/微信图片_20191006162653.png" alt></p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="消融实验"><a href="#消融实验" class="headerlink" title="消融实验"></a>消融实验</h3><p><img src="/images/微信图片_20191006163055.png" alt></p>
 
       
     </div>
@@ -499,7 +416,9 @@ plot_value_vector(sorted_value, sorted_vector)
       
         <div class="post-tags">
           
-            <a href="/tags/GNN/" rel="tag"># GNN</a>
+            <a href="/tags/Detection/" rel="tag"># Detection</a>
+          
+            <a href="/tags/bbox-regression/" rel="tag"># bbox regression</a>
           
         </div>
       
@@ -512,8 +431,8 @@ plot_value_vector(sorted_value, sorted_vector)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/03/GA-RPN论文阅读/" rel="next" title="GA-RPN论文阅读">
-                <i class="fa fa-chevron-left"></i> GA-RPN论文阅读
+              <a href="/2019/09/15/图的基础知识/" rel="next" title="图的基础知识">
+                <i class="fa fa-chevron-left"></i> 图的基础知识
               </a>
             
           </div>
@@ -521,10 +440,6 @@ plot_value_vector(sorted_value, sorted_vector)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/06/Bbox-Regression-with-Uncertainty/" rel="prev" title="Bounding Box Regression with Uncertainty for Accurate Object Detection">
-                Bounding Box Regression with Uncertainty for Accurate Object Detection <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -674,7 +589,7 @@ plot_value_vector(sorted_value, sorted_vector)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图的基本定义"><span class="nav-number">1.</span> <span class="nav-text">图的基本定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图的拉普拉斯矩阵以及它的的特性"><span class="nav-number">2.</span> <span class="nav-text">图的拉普拉斯矩阵以及它的的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#未归一化的图拉普拉斯矩阵"><span class="nav-number">2.1.</span> <span class="nav-text">未归一化的图拉普拉斯矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归一化的图拉普拉斯矩阵"><span class="nav-number">2.2.</span> <span class="nav-text">归一化的图拉普拉斯矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谱聚类算法"><span class="nav-number">3.</span> <span class="nav-text">谱聚类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序"><span class="nav-number">5.</span> <span class="nav-text">程序</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络架构"><span class="nav-number">2.1.</span> <span class="nav-text">网络架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bbox-参数化"><span class="nav-number">2.2.</span> <span class="nav-text">bbox 参数化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KL损失的bbox回归"><span class="nav-number">2.3.</span> <span class="nav-text">KL损失的bbox回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方差投票"><span class="nav-number">2.4.</span> <span class="nav-text">方差投票</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">3.</span> <span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#消融实验"><span class="nav-number">3.1.</span> <span class="nav-text">消融实验</span></a></li></ol></li></ol></div>
             
 
           </div>

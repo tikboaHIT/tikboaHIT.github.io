@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="1. 修改源码方法1：从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令： 1export PYTHONPATH=. 由于python就近调用机制，所以可以直接调用工程目录下的mmdet 方法2：根据王老板的方法，在mmdet外部构建一个修改包，将所有注册器都加载进去，  加载所有注">
+<meta name="description" content="修改源码方法1：从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令： 1export PYTHONPATH=. 由于python就近调用机制，所以可以直接调用工程目录下的mmdet 方法2：根据王老板的方法，在mmdet外部构建一个修改包，将所有注册器都加载进去，  加载所有注册器为">
 <meta name="keywords" content="Detection">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mmdetection 经验汇总">
 <meta property="og:url" content="http://yoursite.com/2020/02/18/mmdetection/index.html">
 <meta property="og:site_name" content="tikboa&#39;s blog">
-<meta property="og:description" content="1. 修改源码方法1：从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令： 1export PYTHONPATH=. 由于python就近调用机制，所以可以直接调用工程目录下的mmdet 方法2：根据王老板的方法，在mmdet外部构建一个修改包，将所有注册器都加载进去，  加载所有注">
+<meta property="og:description" content="修改源码方法1：从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令： 1export PYTHONPATH=. 由于python就近调用机制，所以可以直接调用工程目录下的mmdet 方法2：根据王老板的方法，在mmdet外部构建一个修改包，将所有注册器都加载进去，  加载所有注册器为">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s2.ax1x.com/2020/02/18/3FtfaT.png">
-<meta property="og:updated_time" content="2020-02-18T05:49:42.452Z">
+<meta property="og:updated_time" content="2020-02-18T07:52:07.999Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mmdetection 经验汇总">
-<meta name="twitter:description" content="1. 修改源码方法1：从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令： 1export PYTHONPATH=. 由于python就近调用机制，所以可以直接调用工程目录下的mmdet 方法2：根据王老板的方法，在mmdet外部构建一个修改包，将所有注册器都加载进去，  加载所有注">
+<meta name="twitter:description" content="修改源码方法1：从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令： 1export PYTHONPATH=. 由于python就近调用机制，所以可以直接调用工程目录下的mmdet 方法2：根据王老板的方法，在mmdet外部构建一个修改包，将所有注册器都加载进去，  加载所有注册器为">
 <meta name="twitter:image" content="https://s2.ax1x.com/2020/02/18/3FtfaT.png">
 
 
@@ -365,7 +365,7 @@
       
 
       
-        <h2 id="1-修改源码"><a href="#1-修改源码" class="headerlink" title="1. 修改源码"></a>1. 修改源码</h2><h3 id="方法1："><a href="#方法1：" class="headerlink" title="方法1："></a>方法1：</h3><p>从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令：</p>
+        <h2 id="修改源码"><a href="#修改源码" class="headerlink" title="修改源码"></a>修改源码</h2><h3 id="方法1："><a href="#方法1：" class="headerlink" title="方法1："></a>方法1：</h3><p>从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PYTHONPATH=.</span><br></pre></td></tr></table></figure>
 <p>由于python就近调用机制，所以可以直接调用工程目录下的mmdet</p>
 <h3 id="方法2："><a href="#方法2：" class="headerlink" title="方法2："></a>方法2：</h3><p>根据王老板的方法，在mmdet外部构建一个修改包，将所有注册器都加载进去，</p>
@@ -378,9 +378,9 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.insert(<span class="number">0</span>, <span class="string">'../'</span>)</span><br><span class="line">sys.path.insert(<span class="number">0</span>, <span class="string">'../bottle_module'</span>)</span><br><span class="line"><span class="keyword">import</span> bottle_module</span><br></pre></td></tr></table></figure>
 <p>加载的都是当前工作目录下的mmdet和修改包</p>
 <p>总体而言，感觉方法二更人性化，若要修改源码直接继承在修改包就行，不像方法一每次必须到源码处对应修改</p>
-<h2 id="2-参数"><a href="#2-参数" class="headerlink" title="2. 参数"></a>2. 参数</h2><h3 id="1-降低显存"><a href="#1-降低显存" class="headerlink" title="1. 降低显存"></a>1. 降低显存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fp16 = dict(loss_scale=<span class="number">512.</span>) <span class="comment">#混合精度训练</span></span><br><span class="line">with_cp = <span class="literal">True</span>, <span class="comment">#插入到backbone中, 速度降低</span></span><br></pre></td></tr></table></figure>
-<h3 id="2-跨卡BN"><a href="#2-跨卡BN" class="headerlink" title="2. 跨卡BN"></a>2. 跨卡BN</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">norm_cfg = dict(type=<span class="string">'SyncBN'</span>, requires_grad=<span class="literal">True</span>) <span class="comment">#backbone+FPN+head中插入</span></span><br></pre></td></tr></table></figure>
-<h3 id="3-增点"><a href="#3-增点" class="headerlink" title="3. 增点"></a>3. 增点</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#代替smoothL1Loss</span></span><br><span class="line">loss_bbox=dict(type=<span class="string">'BalancedL1Loss'</span>, alpha=<span class="number">0.5</span>, gamma=<span class="number">1.5</span>, beta=<span class="number">1.0</span>, loss_weight=<span class="number">1.0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#rcnn head采用4conv+1fc</span></span><br><span class="line">dict(</span><br><span class="line">            type=<span class="string">'ConvFCBBoxHead'</span>,</span><br><span class="line">            num_shared_convs=<span class="number">4</span>,</span><br><span class="line">            num_shared_fcs=<span class="number">1</span>,</span><br><span class="line">            in_channels=<span class="number">256</span>,</span><br><span class="line">            conv_out_channels=<span class="number">256</span>,</span><br><span class="line">            fc_out_channels=<span class="number">1024</span>,</span><br><span class="line">            roi_feat_size=<span class="number">7</span>,</span><br><span class="line">            num_classes=<span class="number">11</span>,</span><br><span class="line">            target_means=[<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">            target_stds=[<span class="number">0.05</span>, <span class="number">0.05</span>, <span class="number">0.1</span>, <span class="number">0.1</span>],</span><br><span class="line">            reg_class_agnostic=<span class="literal">True</span>,</span><br><span class="line">            loss_cls=dict(</span><br><span class="line">                type=<span class="string">'CrossEntropyLoss'</span>, use_sigmoid=<span class="literal">False</span>, loss_weight=<span class="number">1.0</span>),</span><br><span class="line">            loss_bbox=dict(type=<span class="string">'SmoothL1Loss'</span>, beta=<span class="number">1.0</span>, loss_weight=<span class="number">1.0</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置正负样本比例上限，原始设置为-1，不做约束</span></span><br><span class="line">neg_pos_ub=<span class="number">3</span>/<span class="number">5</span>,</span><br></pre></td></tr></table></figure>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><h3 id="降低显存"><a href="#降低显存" class="headerlink" title="降低显存"></a>降低显存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fp16 = dict(loss_scale=<span class="number">512.</span>) <span class="comment">#混合精度训练</span></span><br><span class="line">with_cp = <span class="literal">True</span>, <span class="comment">#插入到backbone中, 速度降低</span></span><br></pre></td></tr></table></figure>
+<h3 id="跨卡BN"><a href="#跨卡BN" class="headerlink" title="跨卡BN"></a>跨卡BN</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">norm_cfg = dict(type=<span class="string">'SyncBN'</span>, requires_grad=<span class="literal">True</span>) <span class="comment">#backbone+FPN+head中插入</span></span><br></pre></td></tr></table></figure>
+<h3 id="增点"><a href="#增点" class="headerlink" title="增点"></a>增点</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#代替smoothL1Loss</span></span><br><span class="line">loss_bbox=dict(type=<span class="string">'BalancedL1Loss'</span>, alpha=<span class="number">0.5</span>, gamma=<span class="number">1.5</span>, beta=<span class="number">1.0</span>, loss_weight=<span class="number">1.0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#rcnn head采用4conv+1fc</span></span><br><span class="line">dict(</span><br><span class="line">            type=<span class="string">'ConvFCBBoxHead'</span>,</span><br><span class="line">            num_shared_convs=<span class="number">4</span>,</span><br><span class="line">            num_shared_fcs=<span class="number">1</span>,</span><br><span class="line">            in_channels=<span class="number">256</span>,</span><br><span class="line">            conv_out_channels=<span class="number">256</span>,</span><br><span class="line">            fc_out_channels=<span class="number">1024</span>,</span><br><span class="line">            roi_feat_size=<span class="number">7</span>,</span><br><span class="line">            num_classes=<span class="number">11</span>,</span><br><span class="line">            target_means=[<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">            target_stds=[<span class="number">0.05</span>, <span class="number">0.05</span>, <span class="number">0.1</span>, <span class="number">0.1</span>],</span><br><span class="line">            reg_class_agnostic=<span class="literal">True</span>,</span><br><span class="line">            loss_cls=dict(</span><br><span class="line">                type=<span class="string">'CrossEntropyLoss'</span>, use_sigmoid=<span class="literal">False</span>, loss_weight=<span class="number">1.0</span>),</span><br><span class="line">            loss_bbox=dict(type=<span class="string">'SmoothL1Loss'</span>, beta=<span class="number">1.0</span>, loss_weight=<span class="number">1.0</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置正负样本比例上限，原始设置为-1，不做约束</span></span><br><span class="line">neg_pos_ub=<span class="number">3</span>/<span class="number">5</span>,</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -419,6 +419,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/18/cs-224w/" rel="prev" title="cs_224w">
+                cs_224w <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -497,7 +501,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -519,7 +523,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -568,7 +572,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-修改源码"><span class="nav-number">1.</span> <span class="nav-text">1. 修改源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法1："><span class="nav-number">1.1.</span> <span class="nav-text">方法1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2："><span class="nav-number">1.2.</span> <span class="nav-text">方法2：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-参数"><span class="nav-number">2.</span> <span class="nav-text">2. 参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-降低显存"><span class="nav-number">2.1.</span> <span class="nav-text">1. 降低显存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-跨卡BN"><span class="nav-number">2.2.</span> <span class="nav-text">2. 跨卡BN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-增点"><span class="nav-number">2.3.</span> <span class="nav-text">3. 增点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改源码"><span class="nav-number">1.</span> <span class="nav-text">修改源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法1："><span class="nav-number">1.1.</span> <span class="nav-text">方法1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2："><span class="nav-number">1.2.</span> <span class="nav-text">方法2：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">2.</span> <span class="nav-text">参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#降低显存"><span class="nav-number">2.1.</span> <span class="nav-text">降低显存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨卡BN"><span class="nav-number">2.2.</span> <span class="nav-text">跨卡BN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增点"><span class="nav-number">2.3.</span> <span class="nav-text">增点</span></a></li></ol></li></ol></div>
             
 
           </div>

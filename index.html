@@ -262,6 +262,636 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/27/天池特征工程经验分享/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tik boa">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/39000220?s=400&u=56b45962760ce0ee0829a8677799beee7aa628b9&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tikboa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/27/天池特征工程经验分享/" itemprop="url">天池特征工程经验分享</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-27T14:25:05+08:00">
+                2020-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/03/27/天池特征工程经验分享/" class="leancloud_visitors" data-flag-title="天池特征工程经验分享">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h1><p><strong>目的：将数据转换为更好的表示潜在问题的特征，从而提高机器学习性能</strong></p>
+<h2 id="数据理解"><a href="#数据理解" class="headerlink" title="数据理解"></a>数据理解</h2><p><strong>目的：探索数据，了解数据，主要再EDA阶段完成</strong></p>
+<ol>
+<li>定性数据：<ul>
+<li>定类：按名称分类—血型，城市</li>
+<li>定序：有序分类—成绩（A B C）</li>
+</ul>
+</li>
+<li>定量数据：<ul>
+<li>定距： 可以加减—温度，日期</li>
+<li>定比： 可以乘除—价格，重量</li>
+</ul>
+</li>
+</ol>
+<h2 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h2><p><strong>目的：提高数据质量，降低算法用错误数据建模的风险</strong></p>
+<ol>
+<li>特征变换：模型无法处理或者不适合处理<ul>
+<li>定性变量编码：Label Encoder, One-hot Encoder, Distribution Encoder</li>
+<li>标准化和归一化：z分数标准化（标准正态分布），min-max归一化</li>
+</ul>
+</li>
+<li>缺失值处理：增加不确定性，可能会导致不可靠输出<ul>
+<li>不处理： 少量缺失样本</li>
+<li>删除： 大量样本缺失</li>
+<li>补全：（同类）均值/中位数/众数补全，高维映射（One-hot），模型预测，最邻近补全，矩阵补全（R-SVD）</li>
+</ul>
+</li>
+<li>异常值处理：减少脏数据<ul>
+<li>简单统计：如describe()的统计描述，散点图等；</li>
+<li>3sigma法则（正态分布）/箱型图删除/截断；</li>
+<li>利用模型进行离群点检测：聚类，k近邻，one class SVM, Isolation Forest</li>
+</ul>
+</li>
+<li>其它：删除无效列/更改dtypes/删除列中的字符串/将时间戳从字符串转为日期格式等</li>
+</ol>
+<h2 id="特征构造"><a href="#特征构造" class="headerlink" title="特征构造"></a>特征构造</h2><p><strong>目的：增强数据表达，增加先验知识</strong></p>
+<ol>
+<li>统计量特征：计数，求和，比例，标准差</li>
+<li>时间特征：绝对时间，相对时间，节假日，双休日</li>
+<li>地理信息：分桶</li>
+<li>非线性变换：取log/平方/根号</li>
+<li>数据分桶：等频/等距分桶，best-ks分桶，卡方分桶</li>
+<li>特征组合/特征交叉</li>
+</ol>
+<h2 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h2><p><strong>目的：平衡预测能力和计算复杂度，降低噪声</strong></p>
+<ol>
+<li><p>过滤式（Filter）：先利用特征选择方法对初识特征进行过滤然后再训练学习器，特征选择过程与后续学习器无关</p>
+<ul>
+<li><p>Relief/方差选择/相关系数/卡方检验/互信息法</p>
+<blockquote>
+<p>方差越大，信息量越大，尽可能保留</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>包裹式（Wrapper）：直接把最终要使用的学习器的性能作为衡量特征子集的评价准则，其目的在于给定学习器选择最有利于其特征的特征子集</p>
+<ul>
+<li>Las Vegas Wrapper（LVM）</li>
+</ul>
+</li>
+<li><p>嵌入式（Embedding）: 结合过滤式和包裹式方法，将特征选择与学习器训练过程融为一体，两者在同一优化过程中完成，即学习器训练过程中自动进行了特征选择</p>
+<ul>
+<li>LR+L1或决策树</li>
+</ul>
+</li>
+</ol>
+<h2 id="类别不平衡"><a href="#类别不平衡" class="headerlink" title="类别不平衡"></a>类别不平衡</h2><ol>
+<li><p>扩充数据集</p>
+</li>
+<li><p>尝试其它评价指标：AUC等</p>
+</li>
+<li><p>调整theta值</p>
+<blockquote>
+<p>逻辑斯蒂回归，调整的是阈值，判断正负样本</p>
+</blockquote>
+</li>
+<li><p>重采样：过采样/欠采样</p>
+</li>
+<li><p>合成样本：SMOTE</p>
+</li>
+<li><p>选择其它模型：决策树等</p>
+</li>
+<li><p>加权少类别的样本错分代价</p>
+</li>
+<li><p>创新：</p>
+<ul>
+<li>将大类分解成多个小类</li>
+<li>将小类是为异常点，并用异常检测建模</li>
+</ul>
+</li>
+</ol>
+<h2 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h2><p>删除异常值（根据箱线图，将离群值删去）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这里我包装了一个异常值处理的代码，可以随便调用。</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outliers_proc</span><span class="params">(data, col_name, scale=<span class="number">3</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    用于清洗异常值，默认用 box_plot（scale=3）进行清洗</span></span><br><span class="line"><span class="string">    :param data: 接收 pandas 数据格式</span></span><br><span class="line"><span class="string">    :param col_name: pandas 列名</span></span><br><span class="line"><span class="string">    :param scale: 尺度</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">box_plot_outliers</span><span class="params">(data_ser, box_scale)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        利用箱线图去除异常值</span></span><br><span class="line"><span class="string">        :param data_ser: 接收 pandas.Series 数据格式</span></span><br><span class="line"><span class="string">        :param box_scale: 箱线图尺度，</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        iqr = box_scale * (data_ser.quantile(<span class="number">0.75</span>) - data_ser.quantile(<span class="number">0.25</span>))</span><br><span class="line">        val_low = data_ser.quantile(<span class="number">0.25</span>) - iqr</span><br><span class="line">        val_up = data_ser.quantile(<span class="number">0.75</span>) + iqr</span><br><span class="line">        rule_low = (data_ser &lt; val_low)</span><br><span class="line">        rule_up = (data_ser &gt; val_up)</span><br><span class="line">        <span class="keyword">return</span> (rule_low, rule_up), (val_low, val_up)</span><br><span class="line"></span><br><span class="line">    data_n = data.copy()</span><br><span class="line">    data_series = data_n[col_name]</span><br><span class="line">    rule, value = box_plot_outliers(data_series, box_scale=scale)</span><br><span class="line">    index = np.arange(data_series.shape[<span class="number">0</span>])[rule[<span class="number">0</span>] | rule[<span class="number">1</span>]]</span><br><span class="line">    print(<span class="string">"Delete number is: &#123;&#125;"</span>.format(len(index)))</span><br><span class="line">    data_n = data_n.drop(index)</span><br><span class="line">    data_n.reset_index(drop=<span class="literal">True</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">    print(<span class="string">"Now column number is: &#123;&#125;"</span>.format(data_n.shape[<span class="number">0</span>]))</span><br><span class="line">    index_low = np.arange(data_series.shape[<span class="number">0</span>])[rule[<span class="number">0</span>]]</span><br><span class="line">    outliers = data_series.iloc[index_low]</span><br><span class="line">    print(<span class="string">"Description of data less than the lower bound is:"</span>)</span><br><span class="line">    print(pd.Series(outliers).describe())</span><br><span class="line">    index_up = np.arange(data_series.shape[<span class="number">0</span>])[rule[<span class="number">1</span>]]</span><br><span class="line">    outliers = data_series.iloc[index_up]</span><br><span class="line">    print(<span class="string">"Description of data larger than the upper bound is:"</span>)</span><br><span class="line">    print(pd.Series(outliers).describe())</span><br><span class="line">    </span><br><span class="line">    fig, ax = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">10</span>, <span class="number">7</span>))</span><br><span class="line">    sns.boxplot(y=data[col_name], data=data, palette=<span class="string">"Set1"</span>, ax=ax[<span class="number">0</span>])</span><br><span class="line">    sns.boxplot(y=data_n[col_name], data=data_n, palette=<span class="string">"Set1"</span>, ax=ax[<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> data_n</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/27/GPSQiQ.png" alt="GPSQiQ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/03/27/GPS6L6.png" alt="GPS6L6.png"></p>
+<blockquote>
+<p>采用spearman相关系数，因为他不要求数据是正态分布</p>
+</blockquote>
+<p><img src="https://s1.ax1x.com/2020/03/27/GPS7OP.png" alt="GPS7OP.png"></p>
+<p><img src="https://s1.ax1x.com/2020/03/27/GPp9O0.png" alt="GPp9O0.png"></p>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p><img src="https://s1.ax1x.com/2020/03/27/GPp8te.png" alt="GPp8te.png"></p>
+<p><img src="https://s1.ax1x.com/2020/03/27/GP999H.png" alt="GP999H.png"></p>
+<h2 id="经验总结"><a href="#经验总结" class="headerlink" title="经验总结"></a>经验总结</h2><p>特征工程是比赛中最至关重要的的一块，特别的传统的比赛，大家的模型可能都差不多，调参带来的效果增幅是非常有限的，但特征工程的好坏往往会决定了最终的排名和成绩。</p>
+<p>特征工程的主要目的还是在于将数据转换为能更好地表示潜在问题的特征，从而提高机器学习的性能。比如，异常值处理是为了去除噪声，填补缺失值可以加入先验知识等。</p>
+<p>特征构造也属于特征工程的一部分，其目的是为了增强数据的表达。</p>
+<p>有些比赛的特征是匿名特征，这导致我们并不清楚特征相互直接的关联性，这时我们就只有单纯基于特征进行处理，比如装箱，groupby，agg 等这样一些操作进行一些特征统计，此外还可以对特征进行进一步的 log，exp 等变换，或者对多个特征进行四则运算（如上面我们算出的使用时长），多项式组合等然后进行筛选。由于特性的匿名性其实限制了很多对于特征的处理，当然有些时候用 NN 去提取一些特征也会达到意想不到的良好效果。</p>
+<p>对于知道特征含义（非匿名）的特征工程，特别是在工业类型比赛中，会基于信号处理，频域提取，丰度，偏度等构建更为有实际意义的特征，这就是结合背景的特征构建，在推荐系统中也是这样的，各种类型点击率统计，各时段统计，加用户属性的统计等等，这样一种特征构建往往要深入分析背后的业务逻辑或者说物理原理，从而才能更好的找到 magic。</p>
+<p>当然特征工程其实是和模型结合在一起的，这就是为什么要为 LR NN 做分桶和特征归一化的原因，而对于特征的处理效果和特征重要性等往往要通过模型来验证。</p>
+<p>总的来说，特征工程是一个入门简单，但想精通非常难的一件事。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/27/特征工程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tik boa">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/39000220?s=400&u=56b45962760ce0ee0829a8677799beee7aa628b9&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tikboa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/27/特征工程/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-27T14:21:47+08:00">
+                2020-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/03/27/特征工程/" class="leancloud_visitors" data-flag-title>
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h1><p><strong>目的：将数据转换为更好的表示潜在问题的特征，从而提高机器学习性能</strong></p>
+<h2 id="数据理解"><a href="#数据理解" class="headerlink" title="数据理解"></a>数据理解</h2><p><strong>目的：探索数据，了解数据，主要再EDA阶段完成</strong></p>
+<ol>
+<li>定性数据：<ul>
+<li>定类：按名称分类—血型，城市</li>
+<li>定序：有序分类—成绩（A B C）</li>
+</ul>
+</li>
+<li>定量数据：<ul>
+<li>定距： 可以加减—温度，日期</li>
+<li>定比： 可以乘除—价格，重量</li>
+</ul>
+</li>
+</ol>
+<h2 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h2><p><strong>目的：提高数据质量，降低算法用错误数据建模的风险</strong></p>
+<ol>
+<li>特征变换：模型无法处理或者不适合处理<ul>
+<li>定性变量编码：Label Encoder, One-hot Encoder, Distribution Encoder</li>
+<li>标准化和归一化：z分数标准化（标准正态分布），min-max归一化</li>
+</ul>
+</li>
+<li>缺失值处理：增加不确定性，可能会导致不可靠输出<ul>
+<li>不处理： 少量缺失样本</li>
+<li>删除： 大量样本缺失</li>
+<li>补全：（同类）均值/中位数/众数补全，高维映射（One-hot），模型预测，最邻近补全，矩阵补全（R-SVD）</li>
+</ul>
+</li>
+<li>异常值处理：减少脏数据<ul>
+<li>简单统计：如describe()的统计描述，散点图等；</li>
+<li>3sigma法则（正态分布）/箱型图删除/截断；</li>
+<li>利用模型进行离群点检测：聚类，k近邻，one class SVM, Isolation Forest</li>
+</ul>
+</li>
+<li>其它：删除无效列/更改dtypes/删除列中的字符串/将时间戳从字符串转为日期格式等</li>
+</ol>
+<h2 id="特征构造"><a href="#特征构造" class="headerlink" title="特征构造"></a>特征构造</h2><p><strong>目的：增强数据表达，增加先验知识</strong></p>
+<ol>
+<li>统计量特征：计数，求和，比例，标准差</li>
+<li>时间特征：绝对时间，相对时间，节假日，双休日</li>
+<li>地理信息：分桶</li>
+<li>非线性变换：取log/平方/根号</li>
+<li>数据分桶：等频/等距分桶，best-ks分桶，卡方分桶</li>
+<li>特征组合/特征交叉</li>
+</ol>
+<h2 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h2><p><strong>目的：平衡预测能力和计算复杂度，降低噪声</strong></p>
+<ol>
+<li><p>过滤式（Filter）：先利用特征选择方法对初识特征进行过滤然后再训练学习器，特征选择过程与后续学习器无关</p>
+<ul>
+<li><p>Relief/方差选择/相关系数/卡方检验/互信息法</p>
+<blockquote>
+<p>方差越大，信息量越大，尽可能保留</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>包裹式（Wrapper）：直接把最终要使用的学习器的性能作为衡量特征子集的评价准则，其目的在于给定学习器选择最有利于其特征的特征子集</p>
+<ul>
+<li>Las Vegas Wrapper（LVM）</li>
+</ul>
+</li>
+<li><p>嵌入式（Embedding）: 结合过滤式和包裹式方法，将特征选择与学习器训练过程融为一体，两者在同一优化过程中完成，即学习器训练过程中自动进行了特征选择</p>
+<ul>
+<li>LR+L1或决策树</li>
+</ul>
+</li>
+</ol>
+<h2 id="类别不平衡"><a href="#类别不平衡" class="headerlink" title="类别不平衡"></a>类别不平衡</h2><ol>
+<li><p>扩充数据集</p>
+</li>
+<li><p>尝试其它评价指标：AUC等</p>
+</li>
+<li><p>调整theta值</p>
+<blockquote>
+<p>逻辑斯蒂回归，调整的是阈值，判断正负样本</p>
+</blockquote>
+</li>
+<li><p>重采样：过采样/欠采样</p>
+</li>
+<li><p>合成样本：SMOTE</p>
+</li>
+<li><p>选择其它模型：决策树等</p>
+</li>
+<li><p>加权少类别的样本错分代价</p>
+</li>
+<li><p>创新：</p>
+<ul>
+<li>将大类分解成多个小类</li>
+<li>将小类是为异常点，并用异常检测建模</li>
+</ul>
+</li>
+</ol>
+<h2 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h2><p>删除异常值（根据箱线图，将离群值删去）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这里我包装了一个异常值处理的代码，可以随便调用。</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outliers_proc</span><span class="params">(data, col_name, scale=<span class="number">3</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    用于清洗异常值，默认用 box_plot（scale=3）进行清洗</span></span><br><span class="line"><span class="string">    :param data: 接收 pandas 数据格式</span></span><br><span class="line"><span class="string">    :param col_name: pandas 列名</span></span><br><span class="line"><span class="string">    :param scale: 尺度</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">box_plot_outliers</span><span class="params">(data_ser, box_scale)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        利用箱线图去除异常值</span></span><br><span class="line"><span class="string">        :param data_ser: 接收 pandas.Series 数据格式</span></span><br><span class="line"><span class="string">        :param box_scale: 箱线图尺度，</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        iqr = box_scale * (data_ser.quantile(<span class="number">0.75</span>) - data_ser.quantile(<span class="number">0.25</span>))</span><br><span class="line">        val_low = data_ser.quantile(<span class="number">0.25</span>) - iqr</span><br><span class="line">        val_up = data_ser.quantile(<span class="number">0.75</span>) + iqr</span><br><span class="line">        rule_low = (data_ser &lt; val_low)</span><br><span class="line">        rule_up = (data_ser &gt; val_up)</span><br><span class="line">        <span class="keyword">return</span> (rule_low, rule_up), (val_low, val_up)</span><br><span class="line"></span><br><span class="line">    data_n = data.copy()</span><br><span class="line">    data_series = data_n[col_name]</span><br><span class="line">    rule, value = box_plot_outliers(data_series, box_scale=scale)</span><br><span class="line">    index = np.arange(data_series.shape[<span class="number">0</span>])[rule[<span class="number">0</span>] | rule[<span class="number">1</span>]]</span><br><span class="line">    print(<span class="string">"Delete number is: &#123;&#125;"</span>.format(len(index)))</span><br><span class="line">    data_n = data_n.drop(index)</span><br><span class="line">    data_n.reset_index(drop=<span class="literal">True</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">    print(<span class="string">"Now column number is: &#123;&#125;"</span>.format(data_n.shape[<span class="number">0</span>]))</span><br><span class="line">    index_low = np.arange(data_series.shape[<span class="number">0</span>])[rule[<span class="number">0</span>]]</span><br><span class="line">    outliers = data_series.iloc[index_low]</span><br><span class="line">    print(<span class="string">"Description of data less than the lower bound is:"</span>)</span><br><span class="line">    print(pd.Series(outliers).describe())</span><br><span class="line">    index_up = np.arange(data_series.shape[<span class="number">0</span>])[rule[<span class="number">1</span>]]</span><br><span class="line">    outliers = data_series.iloc[index_up]</span><br><span class="line">    print(<span class="string">"Description of data larger than the upper bound is:"</span>)</span><br><span class="line">    print(pd.Series(outliers).describe())</span><br><span class="line">    </span><br><span class="line">    fig, ax = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">10</span>, <span class="number">7</span>))</span><br><span class="line">    sns.boxplot(y=data[col_name], data=data, palette=<span class="string">"Set1"</span>, ax=ax[<span class="number">0</span>])</span><br><span class="line">    sns.boxplot(y=data_n[col_name], data=data_n, palette=<span class="string">"Set1"</span>, ax=ax[<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> data_n</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/27/GPSQiQ.png" alt="GPSQiQ.png"></p>
+<p><img src="https://s1.ax1x.com/2020/03/27/GPS6L6.png" alt="GPS6L6.png"></p>
+<blockquote>
+<p>采用spearman相关系数，因为他不要求数据是正态分布</p>
+</blockquote>
+<p><img src="https://s1.ax1x.com/2020/03/27/GPS7OP.png" alt="GPS7OP.png"></p>
+<p><img src="https://s1.ax1x.com/2020/03/27/GPp9O0.png" alt="GPp9O0.png"></p>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p><img src="https://s1.ax1x.com/2020/03/27/GPp8te.png" alt="GPp8te.png"></p>
+<p><img src="https://s1.ax1x.com/2020/03/27/GP999H.png" alt="GP999H.png"></p>
+<h2 id="经验总结"><a href="#经验总结" class="headerlink" title="经验总结"></a>经验总结</h2><p>特征工程是比赛中最至关重要的的一块，特别的传统的比赛，大家的模型可能都差不多，调参带来的效果增幅是非常有限的，但特征工程的好坏往往会决定了最终的排名和成绩。</p>
+<p>特征工程的主要目的还是在于将数据转换为能更好地表示潜在问题的特征，从而提高机器学习的性能。比如，异常值处理是为了去除噪声，填补缺失值可以加入先验知识等。</p>
+<p>特征构造也属于特征工程的一部分，其目的是为了增强数据的表达。</p>
+<p>有些比赛的特征是匿名特征，这导致我们并不清楚特征相互直接的关联性，这时我们就只有单纯基于特征进行处理，比如装箱，groupby，agg 等这样一些操作进行一些特征统计，此外还可以对特征进行进一步的 log，exp 等变换，或者对多个特征进行四则运算（如上面我们算出的使用时长），多项式组合等然后进行筛选。由于特性的匿名性其实限制了很多对于特征的处理，当然有些时候用 NN 去提取一些特征也会达到意想不到的良好效果。</p>
+<p>对于知道特征含义（非匿名）的特征工程，特别是在工业类型比赛中，会基于信号处理，频域提取，丰度，偏度等构建更为有实际意义的特征，这就是结合背景的特征构建，在推荐系统中也是这样的，各种类型点击率统计，各时段统计，加用户属性的统计等等，这样一种特征构建往往要深入分析背后的业务逻辑或者说物理原理，从而才能更好的找到 magic。</p>
+<p>当然特征工程其实是和模型结合在一起的，这就是为什么要为 LR NN 做分桶和特征归一化的原因，而对于特征的处理效果和特征重要性等往往要通过模型来验证。</p>
+<p>总的来说，特征工程是一个入门简单，但想精通非常难的一件事。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/18/cs-224w/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tik boa">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/39000220?s=400&u=56b45962760ce0ee0829a8677799beee7aa628b9&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tikboa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/18/cs-224w/" itemprop="url">cs_224w</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-18T15:44:45+08:00">
+                2020-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/02/18/cs-224w/" class="leancloud_visitors" data-flag-title="cs_224w">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/18/mmdetection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -366,7 +996,7 @@
       
         
           
-            <h2 id="1-修改源码"><a href="#1-修改源码" class="headerlink" title="1. 修改源码"></a>1. 修改源码</h2><h3 id="方法1："><a href="#方法1：" class="headerlink" title="方法1："></a>方法1：</h3><p>从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令：</p>
+            <h2 id="修改源码"><a href="#修改源码" class="headerlink" title="修改源码"></a>修改源码</h2><h3 id="方法1："><a href="#方法1：" class="headerlink" title="方法1："></a>方法1：</h3><p>从福哥编译镜像处学到的方法是，首先将mmdet正常编译，然后将编译后的mmdet移到主要工程目录下。运行程序时，为了调用工程目录下的mmdet，sh中需要加入下述命令：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PYTHONPATH=.</span><br></pre></td></tr></table></figure>
 <p>由于python就近调用机制，所以可以直接调用工程目录下的mmdet</p>
 <h3 id="方法2："><a href="#方法2：" class="headerlink" title="方法2："></a>方法2：</h3><p>根据王老板的方法，在mmdet外部构建一个修改包，将所有注册器都加载进去，</p>
@@ -379,9 +1009,9 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.insert(<span class="number">0</span>, <span class="string">'../'</span>)</span><br><span class="line">sys.path.insert(<span class="number">0</span>, <span class="string">'../bottle_module'</span>)</span><br><span class="line"><span class="keyword">import</span> bottle_module</span><br></pre></td></tr></table></figure>
 <p>加载的都是当前工作目录下的mmdet和修改包</p>
 <p>总体而言，感觉方法二更人性化，若要修改源码直接继承在修改包就行，不像方法一每次必须到源码处对应修改</p>
-<h2 id="2-参数"><a href="#2-参数" class="headerlink" title="2. 参数"></a>2. 参数</h2><h3 id="1-降低显存"><a href="#1-降低显存" class="headerlink" title="1. 降低显存"></a>1. 降低显存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fp16 = dict(loss_scale=<span class="number">512.</span>) <span class="comment">#混合精度训练</span></span><br><span class="line">with_cp = <span class="literal">True</span>, <span class="comment">#插入到backbone中, 速度降低</span></span><br></pre></td></tr></table></figure>
-<h3 id="2-跨卡BN"><a href="#2-跨卡BN" class="headerlink" title="2. 跨卡BN"></a>2. 跨卡BN</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">norm_cfg = dict(type=<span class="string">'SyncBN'</span>, requires_grad=<span class="literal">True</span>) <span class="comment">#backbone+FPN+head中插入</span></span><br></pre></td></tr></table></figure>
-<h3 id="3-增点"><a href="#3-增点" class="headerlink" title="3. 增点"></a>3. 增点</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#代替smoothL1Loss</span></span><br><span class="line">loss_bbox=dict(type=<span class="string">'BalancedL1Loss'</span>, alpha=<span class="number">0.5</span>, gamma=<span class="number">1.5</span>, beta=<span class="number">1.0</span>, loss_weight=<span class="number">1.0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#rcnn head采用4conv+1fc</span></span><br><span class="line">dict(</span><br><span class="line">            type=<span class="string">'ConvFCBBoxHead'</span>,</span><br><span class="line">            num_shared_convs=<span class="number">4</span>,</span><br><span class="line">            num_shared_fcs=<span class="number">1</span>,</span><br><span class="line">            in_channels=<span class="number">256</span>,</span><br><span class="line">            conv_out_channels=<span class="number">256</span>,</span><br><span class="line">            fc_out_channels=<span class="number">1024</span>,</span><br><span class="line">            roi_feat_size=<span class="number">7</span>,</span><br><span class="line">            num_classes=<span class="number">11</span>,</span><br><span class="line">            target_means=[<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">            target_stds=[<span class="number">0.05</span>, <span class="number">0.05</span>, <span class="number">0.1</span>, <span class="number">0.1</span>],</span><br><span class="line">            reg_class_agnostic=<span class="literal">True</span>,</span><br><span class="line">            loss_cls=dict(</span><br><span class="line">                type=<span class="string">'CrossEntropyLoss'</span>, use_sigmoid=<span class="literal">False</span>, loss_weight=<span class="number">1.0</span>),</span><br><span class="line">            loss_bbox=dict(type=<span class="string">'SmoothL1Loss'</span>, beta=<span class="number">1.0</span>, loss_weight=<span class="number">1.0</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置正负样本比例上限，原始设置为-1，不做约束</span></span><br><span class="line">neg_pos_ub=<span class="number">3</span>/<span class="number">5</span>,</span><br></pre></td></tr></table></figure>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><h3 id="降低显存"><a href="#降低显存" class="headerlink" title="降低显存"></a>降低显存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fp16 = dict(loss_scale=<span class="number">512.</span>) <span class="comment">#混合精度训练</span></span><br><span class="line">with_cp = <span class="literal">True</span>, <span class="comment">#插入到backbone中, 速度降低</span></span><br></pre></td></tr></table></figure>
+<h3 id="跨卡BN"><a href="#跨卡BN" class="headerlink" title="跨卡BN"></a>跨卡BN</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">norm_cfg = dict(type=<span class="string">'SyncBN'</span>, requires_grad=<span class="literal">True</span>) <span class="comment">#backbone+FPN+head中插入</span></span><br></pre></td></tr></table></figure>
+<h3 id="增点"><a href="#增点" class="headerlink" title="增点"></a>增点</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#代替smoothL1Loss</span></span><br><span class="line">loss_bbox=dict(type=<span class="string">'BalancedL1Loss'</span>, alpha=<span class="number">0.5</span>, gamma=<span class="number">1.5</span>, beta=<span class="number">1.0</span>, loss_weight=<span class="number">1.0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#rcnn head采用4conv+1fc</span></span><br><span class="line">dict(</span><br><span class="line">            type=<span class="string">'ConvFCBBoxHead'</span>,</span><br><span class="line">            num_shared_convs=<span class="number">4</span>,</span><br><span class="line">            num_shared_fcs=<span class="number">1</span>,</span><br><span class="line">            in_channels=<span class="number">256</span>,</span><br><span class="line">            conv_out_channels=<span class="number">256</span>,</span><br><span class="line">            fc_out_channels=<span class="number">1024</span>,</span><br><span class="line">            roi_feat_size=<span class="number">7</span>,</span><br><span class="line">            num_classes=<span class="number">11</span>,</span><br><span class="line">            target_means=[<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>],</span><br><span class="line">            target_stds=[<span class="number">0.05</span>, <span class="number">0.05</span>, <span class="number">0.1</span>, <span class="number">0.1</span>],</span><br><span class="line">            reg_class_agnostic=<span class="literal">True</span>,</span><br><span class="line">            loss_cls=dict(</span><br><span class="line">                type=<span class="string">'CrossEntropyLoss'</span>, use_sigmoid=<span class="literal">False</span>, loss_weight=<span class="number">1.0</span>),</span><br><span class="line">            loss_bbox=dict(type=<span class="string">'SmoothL1Loss'</span>, beta=<span class="number">1.0</span>, loss_weight=<span class="number">1.0</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置正负样本比例上限，原始设置为-1，不做约束</span></span><br><span class="line">neg_pos_ub=<span class="number">3</span>/<span class="number">5</span>,</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1255,7 +1885,7 @@ plot_value_vector(sorted_value, sorted_vector)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1277,7 +1907,7 @@ plot_value_vector(sorted_value, sorted_vector)
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
